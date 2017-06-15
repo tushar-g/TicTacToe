@@ -12,13 +12,22 @@ enum Player : String {
     case X = "X"
     case O = "O"
 }
-
-enum GameState {
-    case IN_PROGRESS, FINISHED
-}
-
+//
+// This is an Example of Massive View Controller Architecture.
+// View Rendering, Game Logic, Game state maintainence are all 
+// done in one single Class. This makes thie ViewController completely
+// untestable.
+//
 class ViewController: UIViewController {
-    
+
+    //
+    // Business Logic. Must not be in a class that's very tightly 
+    // coupled with View i.e. this ViewController
+    //
+    fileprivate enum GameState {
+        case IN_PROGRESS, FINISHED
+    }
+
     fileprivate struct Consts {
         static let rows = 3
         static let columns = 3
