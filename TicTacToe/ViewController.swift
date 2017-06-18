@@ -8,26 +8,8 @@
 
 import UIKit
 
-enum Player : String {
-    case X = "X"
-    case O = "O"
-}
-//
-// This is an Example of Massive View Controller Architecture.
-// View Rendering, Game Logic, Game state maintainence are all 
-// done in one single Class. This makes thie ViewController completely
-// untestable.
-//
 class ViewController: UIViewController {
-
-    //
-    // Business Logic. Must not be in a class that's very tightly 
-    // coupled with View i.e. this ViewController
-    //
-    fileprivate enum GameState {
-        case IN_PROGRESS, FINISHED
-    }
-
+    
     fileprivate struct Consts {
         static let rows = 3
         static let columns = 3
@@ -41,113 +23,44 @@ class ViewController: UIViewController {
     @IBOutlet weak var winnerTextLabel: UILabel!
     @IBOutlet weak var rstClrButton: UIButton!
     
-    fileprivate var currentTurn = Player.X
-    fileprivate var gameState = GameState.IN_PROGRESS {
-        didSet {
-            switch gameState {
-            case .FINISHED:
-                rstClrButton.setTitle("RESTART", for: UIControlState())
-            case .IN_PROGRESS:
-                rstClrButton.setTitle("CLEAR", for: UIControlState())
-            }
-        }
-    }
+    fileprivate var viewModel: TicTacTowViewModel?
     
     @IBAction func rstClrButtonPressed(_ sender: Any) {
-        currentTurn = .X
-        clearCells()
-        winnerTextLabel.text = ""
-        gameState = .IN_PROGRESS
+        clearCells() // <- Does this belong here? Should a View know
+                     // about what to do on click of a button i.e. an Action
+        viewModel?.reset()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         winnerTextLabel.text = ""
-        rstClrButton.setTitle("CLEAR", for: UIControlState())
         ticTacTowGrid.delegate = self
         ticTacTowGrid.dataSource = self
         ticTacTowGrid.register(TicTacTowCollectionViewCell.self)
-    }
-    
-    fileprivate func row(_ indexPath: IndexPath) -> Int {
-        return indexPath.row / Consts.rows
-    }
-    
-    fileprivate func column(_ indexPath: IndexPath) -> Int {
-        return indexPath.row % Consts.columns
-    }
-    
-    fileprivate func tttcell(r : Int, c: Int) -> TicTacTowCollectionViewCell? {
-        return ticTacTowGrid.cellForItem(at: IndexPath(row: r * Consts.rows + c, section: 0)) as?TicTacTowCollectionViewCell
+        
+        // This should be outside ViewController. Currently Dont have
+        // Typhoon or any other dependency injection mode.
+        viewModel = TicTacTowViewModel(dataModel: Board())
+        viewModel?.setActionButtonText = { text in
+            self.rstClrButton.setTitle(text, for: UIControlState())
+        }
+        viewModel?.declareDraw = { text in
+            self.winnerTextLabel.text = text
+        }
+        
+        viewModel?.declareWinner = { text, indexes in
+            self.winnerTextLabel.text = text
+            indexes.forEach { self.tttcell(at: $0)?.setWinnerCell() }
+        }
+        
+        viewModel?.markTictactoeCell = {player, index in
+            self.tttcell(at: index)?.mark(player: player)
+        }
     }
     
     fileprivate func tttcell(at indexPath: IndexPath) -> TicTacTowCollectionViewCell? {
         return ticTacTowGrid.cellForItem(at: indexPath) as? TicTacTowCollectionViewCell
-    }
-    
-    // MARK : Game Logic
-    fileprivate func isValidMove(at indexPath: IndexPath) -> Bool {
-        return !isCellAlreadyPlayed(at: indexPath)
-            && gameState == .IN_PROGRESS
-    }
-    
-    fileprivate func isCellAlreadyPlayed(at indexPath: IndexPath) -> Bool {
-        return tttcell(at: indexPath)?.isPlayed ?? false
-    }
-    
-    fileprivate func isWinningMove(by player: Player, currentRow row: Int, currentColumn column: Int) -> (Bool, [IndexPath]?) {
-        
-        var isWinningRow = true
-        [0,1,2].map { tttcell(r: row, c: $0)?.player }
-            .forEach { isWinningRow = ($0 == player) && isWinningRow }
-        
-        var isWinningColumn = true
-        [0,1,2].map { tttcell(r: $0, c: column)?.player }
-            .forEach { isWinningColumn =  ($0 == player) && isWinningColumn }
-        
-        var isWinningDialognal1 = row == column
-        [0,1,2].map { tttcell(r: $0, c: $0)?.player }
-            .forEach { isWinningDialognal1 =  ($0 == player) && isWinningDialognal1 }
-        
-        var isWinningDialognal2 = row + column == Consts.rows - 1
-        [0,1,2].map { tttcell(r: $0, c: 2 - $0)?.player }
-            .forEach { isWinningDialognal2 =  ($0 == player) && isWinningDialognal2 }
-        
-        if isWinningRow {
-            return (true, [0,1,2].flatMap { IndexPath(row: Consts.rows * row + $0, section: 0) })
-        } else if isWinningColumn {
-            return (true, [0,1,2].flatMap { IndexPath(row: Consts.rows * $0 + column, section: 0) })
-        } else if isWinningDialognal1 {
-            return (true, [0,1,2].flatMap { IndexPath(row: 4 * $0, section: 0) })
-        } else if isWinningDialognal2 {
-            return (true, [0,1,2].flatMap { IndexPath(row: 2 * $0 + 2, section: 0) })
-        }
-        
-        return (false, nil)
-    }
-    
-    fileprivate func isGameDraw() -> Bool {
-        var isGameDraw = true
-        Array(0...8).map { tttcell(at: IndexPath(row: $0, section: 0))?.isPlayed }
-            .forEach { isGameDraw = ($0 ?? false) && isGameDraw }
-        return isGameDraw
-    }
-    
-    fileprivate func declareWinner(indexes: [IndexPath]) {
-        indexes.forEach { tttcell(at: $0)?.setWinnerCell(true) }
-        winnerTextLabel.text = "Winner is Player \(currentTurn.rawValue)"
-    }
-    
-    fileprivate func declareDraw() {
-        winnerTextLabel.text = "Draw"
-    }
-    
-    fileprivate func flipTurn() {
-        currentTurn = currentTurn == .X ? .O : .X
-    }
-    
-    fileprivate func markCell(at indexPath: IndexPath) {
-        tttcell(at: indexPath)?.player = currentTurn
     }
     
     fileprivate func clearCells() {
@@ -171,7 +84,6 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TicTacTowCollectionViewCell.reuseIdentifier, for: indexPath) as? TicTacTowCollectionViewCell {
-            cell.assign(row: row(indexPath), column: column(indexPath))
             return cell
         }
         
@@ -187,20 +99,8 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let currentCell = collectionView.cellForItem(at: indexPath) as? TicTacTowCollectionViewCell {
-            if isValidMove(at: indexPath) {
-                markCell(at: indexPath)
-                let (isWinning, indexes) = isWinningMove(by: currentTurn, currentRow: currentCell.row, currentColumn: currentCell.column)
-                if let indexes = indexes, isWinning == true {
-                    gameState = .FINISHED
-                    declareWinner(indexes: indexes)
-                } else if isGameDraw() {
-                    gameState = .FINISHED
-                    declareDraw()
-                } else {
-                    flipTurn()
-                }
-            }
+        if let _ = collectionView.cellForItem(at: indexPath) as? TicTacTowCollectionViewCell {
+            viewModel?.clickedCell(at: indexPath)
         }
     }
 }

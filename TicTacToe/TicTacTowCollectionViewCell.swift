@@ -11,19 +11,6 @@ import UIKit
 class TicTacTowCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var textXOLabel: UILabel!
-    
-    var player: Player? {
-        didSet {
-            textXOLabel.text = player?.rawValue
-        }
-    }
-    
-    var isPlayed : Bool {
-        return player != nil
-    }
-    
-    var row: Int = 0
-    var column: Int = 0
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,22 +20,17 @@ class TicTacTowCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = UIColor.lightGray
     }
     
-    
-    
-    func setWinnerCell(_ bool : Bool) {
-        if bool {
-            textXOLabel.textColor = UIColor.red
-        }
+    func mark(player: String) {
+        textXOLabel.text = player
     }
     
-    func assign(row: Int, column: Int) {
-        self.row = row
-        self.column = column
-    }
     
+    func setWinnerCell() {
+        textXOLabel.textColor = UIColor.red
+    }
+
     func clear() {
         textXOLabel.text = ""
         textXOLabel.textColor = UIColor.black
-        player = nil
     }
 }

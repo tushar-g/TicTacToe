@@ -35,14 +35,3 @@ extension UICollectionView {
         register(nib, forCellWithReuseIdentifier: T.reuseIdentifier)
     }
 }
-
-extension UICollectionView {
-//    func deque<T: UICollectionViewCell>(for type: T.Type, for indexPath: IndexPath) -> T {
-//        if let cell = self.dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T {
-//            return cell
-//        }
-//        
-//        self.register(T.self)
-//        return self.dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as! T
-//    }
-}
