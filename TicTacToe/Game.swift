@@ -9,8 +9,9 @@
 import Foundation
 
 enum Game {
-    case won(Player, [(Int, Int)])
+    typealias CellIndex = (BoardProtocol.Row, BoardProtocol.Col)
+    
+    case won(Player, [CellIndex])
     case draw
-    case move(Player)
-    case invalid
+    case move(Player, CellIndex)
 }

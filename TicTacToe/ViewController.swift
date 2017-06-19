@@ -23,11 +23,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var winnerTextLabel: UILabel!
     @IBOutlet weak var rstClrButton: UIButton!
     
-    fileprivate var viewModel: TicTacTowViewModel?
+    fileprivate var viewModel: TicTacTowViewModelProtocol?
     
     @IBAction func rstClrButtonPressed(_ sender: Any) {
         clearCells() // <- Does this belong here? Should a View know
                      // about what to do on click of a button i.e. an Action
+        winnerTextLabel.text = ""
         viewModel?.reset()
     }
     

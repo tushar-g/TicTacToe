@@ -13,7 +13,9 @@ protocol BoardProtocol {
     typealias Row = Int
     typealias Col = Int
     
-    func mark(row: Row, col: Col) -> Game
+    var moveCompleter: ((Game) -> Void)? {get set}
+    
+    func mark(row: Row, col: Col)
     
     func reset()
 }

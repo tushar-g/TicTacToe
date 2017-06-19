@@ -16,42 +16,47 @@ class Board : BoardProtocol {
     
     fileprivate var currentTurn: Player = .x
     fileprivate var gameState: GameState = .in_progress
-    fileprivate let cells: [[Cell]] = Array(repeating: Array(repeating: Cell(), count: 3), count: 3)
+    fileprivate let cells: [[Cell]] = [[Cell(), Cell(), Cell()],
+                                       [Cell(), Cell(), Cell()],
+                                       [Cell(), Cell(), Cell()]]
     
     init() {
         reset()
     }
     
+    var moveCompleter: ((Game) -> Void)?
+    
     func reset() {
         cells.forEach { $0.forEach { $0.clear() } }
         currentTurn = .x
+        gameState = .in_progress
     }
     
-    func mark(row: Row, col: Col) -> Game {
+    func mark(row: Row, col: Col) {
         if isValidMove(row, col) {
             cells[row][col].player = currentTurn
+            moveCompleter?(Game.move(currentTurn, (row, col)))
             
-            let game = isWinningMove(by: currentTurn, atRow: row, atCol: col)
-            if let indices = game.1, game.0 == true {
-                return Game.won(currentTurn, indices)
+            let winingMove = isWinningMove(by: currentTurn, atRow: row, atCol: col)
+            if let indices = winingMove.1, winingMove.0 == true {
+                moveCompleter?(Game.won(currentTurn, indices))
+                gameState = .finished
             }
             
             if isDraw() {
-                return Game.draw
+                moveCompleter?(Game.draw)
+                gameState = .finished
             }
             
-            let lastMoveBy = currentTurn
             flipTurn()
-            return Game.move(lastMoveBy)
         }
-        return Game.invalid
     }
     
     private func isValidMove(_ row: Row, _ col: Col) -> Bool {
-        return cells[row][col].player != .none && gameState == .in_progress
+        return cells[row][col].player == .none && gameState == .in_progress
     }
     
-    private func isWinningMove(by player: Player, atRow row: Row, atCol col: Col) -> (Bool, [(Row, Col)]?) {
+    private func isWinningMove(by player: Player, atRow row: Row, atCol col: Col) -> (Bool, [Game.CellIndex]?) {
         
         let tttIndices = [0,1,2]
         
@@ -79,7 +84,7 @@ class Board : BoardProtocol {
     }
     
     private func isDraw() -> Bool {
-        return cells.map {$0.map {$0.player != .none}.reduce(true) {$0 && $1}}.reduce(true) {$0 && $1}
+        return cells.map {$0.map {$0.player != .none}.reduce(true) {$0 && $1} }.reduce(true) {$0 && $1}
     }
     
     private func flipTurn() {

@@ -9,6 +9,11 @@
 import Foundation
 
 class Cell {
+    
+    init(player: Player = .none) {
+        self.player = player
+    }
+    
     var player: Player = .none
     
     func clear() {

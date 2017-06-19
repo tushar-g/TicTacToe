@@ -15,6 +15,26 @@ class TicTacTowViewModel : TicTacTowViewModelProtocol {
     
     init(dataModel: BoardProtocol) {
         self.dataModel = dataModel
+        
+        self.dataModel.moveCompleter = { game in
+                switch game {
+                case .move(let player, let index):
+                    self.markTictactoeCell?(player.toString,
+                                            IndexPath(index.0, index.1))
+                    
+                case .draw:
+                    self.declareDraw?("Draw")
+                    self.setActionButtonText?("Reset")
+                    
+                case .won(let player, let indices):
+                    let indexPaths: [IndexPath] = indices.flatMap {
+                        IndexPath($0.0, $0.1)
+                    }
+                    self.declareWinner?("Winner is \(player.toString)", indexPaths)
+                    self.setActionButtonText?("Reset")
+                    
+                }
+        }
     }
     
     var markTictactoeCell : ((String, IndexPath) -> ())?
@@ -35,22 +55,12 @@ class TicTacTowViewModel : TicTacTowViewModelProtocol {
     }
     
     func clickedCell(at indexPath: IndexPath) {
-        let game = dataModel.mark(row: indexPath.row / 3, col: indexPath.row % 3)
-        
-        switch game {
-        case .move(let player):
-            markTictactoeCell?(player.toString, indexPath)
-            
-        case .draw:
-            declareDraw?("Draw")
-            setActionButtonText?("Reset")
-            
-        case .won(let player, let indices):
-            let indexPaths: [IndexPath] = indices.flatMap { IndexPath(row: $0.0 * 3 + $0.1, section: 0) }
-            declareWinner?("Winner is \(player.toString)", indexPaths)
-            setActionButtonText?("Reset")
-            
-        default: ()
-        }
+        dataModel.mark(row: indexPath.row / 3, col: indexPath.row % 3)
+    }
+}
+
+private extension IndexPath {
+    init(_ row: Int, _ col: Int) {
+        self.init(row: row * 3 + col, section: 0)
     }
 }
