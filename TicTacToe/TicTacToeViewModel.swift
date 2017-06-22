@@ -11,12 +11,21 @@ import Foundation
 
 class TicTacTowViewModel : TicTacTowViewModelProtocol {
     
-    private var dataModel : BoardProtocol
+    var markTictactoeCell: ((String, IndexPath) -> ())?
     
-    init(dataModel: BoardProtocol) {
-        self.dataModel = dataModel
-        
-        self.dataModel.moveCompleter = { game in
+    var declareDraw: ((String) -> ())?
+    
+    var declareWinner: ((String, [IndexPath]) -> ())?
+    
+    var setActionButtonText: ((String) -> ())? {
+        didSet {
+            setActionButtonText?("Clear")
+        }
+    }
+    
+    private var dataModel : BoardProtocol? {
+        didSet {
+            dataModel?.moveCompleter = { game in
                 switch game {
                 case .move(let player, let index):
                     self.markTictactoeCell?(player.toString,
@@ -34,28 +43,21 @@ class TicTacTowViewModel : TicTacTowViewModelProtocol {
                     self.setActionButtonText?("Reset")
                     
                 }
+            }
         }
     }
     
-    var markTictactoeCell : ((String, IndexPath) -> ())?
-    
-    var declareDraw: ((String) -> ())?
-    
-    var declareWinner: ((String, [IndexPath]) -> ())?
-    
-    var setActionButtonText: ((String) -> ())? {
-        didSet {
-            setActionButtonText?("Clear")
-        }
+    init(dataModel: BoardProtocol) {
+        self.dataModel = dataModel
     }
-    
+
     func reset() {
-        dataModel.reset()
+        dataModel?.reset()
         setActionButtonText?("Clear")
     }
     
     func clickedCell(at indexPath: IndexPath) {
-        dataModel.mark(row: indexPath.row / 3, col: indexPath.row % 3)
+        dataModel?.mark(row: indexPath.row / 3, col: indexPath.row % 3)
     }
 }
 
