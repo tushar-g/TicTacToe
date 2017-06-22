@@ -24,31 +24,31 @@ class TicTacTowPresenter : TicTacTowPresenterProtocol {
         self.dataModel?.moveCompleter = { game in
                 switch game {
                 case .move(let player, let index):
-                    tttView?.markTictactoeCell(player.toString,
+                    self.tttView?.markTictactoeCell(player.toString,
                                             IndexPath(index.0, index.1))
                     
                 case .draw:
-                    tttView?.declareDraw("Draw")
-                    tttView?.setActionButtonText("Reset")
+                    self.tttView?.declareDraw("Draw")
+                    self.tttView?.setActionButtonText("Reset")
                     
                 case .won(let player, let indices):
                     let indexPaths: [IndexPath] = indices.flatMap {
                         IndexPath($0.0, $0.1)
                     }
-                    tttView?.declareWinner("Winner is \(player.toString)", indexPaths)
-                    tttView?.setActionButtonText("Reset")
+                    self.tttView?.declareWinner("Winner is \(player.toString)", indexPaths)
+                    self.tttView?.setActionButtonText("Reset")
                     
                 }
         }
     }
 
     func reset() {
-        dataModel.reset()
-        setActionButtonText?("Clear")
+        dataModel?.reset()
+        tttView?.setActionButtonText("Clear")
     }
     
     func clickedCell(at indexPath: IndexPath) {
-        dataModel.mark(row: indexPath.row / 3, col: indexPath.row % 3)
+        dataModel?.mark(row: indexPath.row / 3, col: indexPath.row % 3)
     }
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol TicTacToeViewProtocol {
+@objc protocol TicTacToeViewProtocol {
     func markTictactoeCell(_ text: String, _ index: IndexPath)
     
     func declareDraw(_ text: String)
