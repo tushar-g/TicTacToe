@@ -100,7 +100,7 @@
 			children = (
 				34E194971EF2C870006337BD /* Utils */,
 				34E194961EF2C85F006337BD /* Views */,
-				34E194951EF2C856006337BD /* Presenter */,
+				34E194951EF2C856006337BD /* ViewModel */,
 				34E194941EF2C835006337BD /* Models */,
 				3432718A1EF04DB400542566 /* TicTacToe-Bridging-Header.h */,
 				3432716A1EF04D6E00542566 /* AppDelegate.swift */,
@@ -129,13 +129,13 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		34E194951EF2C856006337BD /* Presenter */ = {
+		34E194951EF2C856006337BD /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				34E194A41EF3058F006337BD /* TicTacToeViewModel.swift */,
 				34E194A61EF305FE006337BD /* TicTacToeViewModelProtocol.swift */,
 			);
-			name = Presenter;
+			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		34E194961EF2C85F006337BD /* Views */ = {
