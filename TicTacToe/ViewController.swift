@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, TicTacToeViewProtocol {
     
     fileprivate struct Consts {
         static let rows = 3
@@ -23,13 +23,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var winnerTextLabel: UILabel!
     @IBOutlet weak var rstClrButton: UIButton!
     
-    fileprivate var viewModel: TicTacTowViewModelProtocol?
+    fileprivate var presenter: TicTacTowPresenterProtocol?
     
     @IBAction func rstClrButtonPressed(_ sender: Any) {
         clearCells() // <- Does this belong here? Should a View know
-                     // about what to do on click of a button i.e. an Action
+        // about what to do on click of a button i.e. an Action
         winnerTextLabel.text = ""
-        viewModel?.reset()
+        presenter?.reset()
     }
     
     override func viewDidLoad() {
@@ -42,22 +42,7 @@ class ViewController: UIViewController {
         
         // This should be outside ViewController. Currently Dont have
         // Typhoon or any other dependency injection mode.
-        viewModel = TicTacTowViewModel(dataModel: Board())
-        viewModel?.setActionButtonText = { text in
-            self.rstClrButton.setTitle(text, for: UIControlState())
-        }
-        viewModel?.declareDraw = { text in
-            self.winnerTextLabel.text = text
-        }
-        
-        viewModel?.declareWinner = { text, indexes in
-            self.winnerTextLabel.text = text
-            indexes.forEach { self.tttcell(at: $0)?.setWinnerCell() }
-        }
-        
-        viewModel?.markTictactoeCell = {player, index in
-            self.tttcell(at: index)?.mark(player: player)
-        }
+        presenter = TicTacTowPresenter(self, Board())
     }
     
     fileprivate func tttcell(at indexPath: IndexPath) -> TicTacTowCollectionViewCell? {
@@ -66,6 +51,23 @@ class ViewController: UIViewController {
     
     fileprivate func clearCells() {
         ticTacTowGrid.indexPathsForVisibleItems.forEach{ tttcell(at: $0)?.clear() }
+    }
+    
+    func markTictactoeCell(_ text: String,_ index: IndexPath) {
+        self.tttcell(at: index)?.mark(player: text)
+    }
+    
+    func declareDraw(_ text: String) {
+        self.winnerTextLabel.text = text
+    }
+    
+    func declareWinner(_ text: String, _ indexes: [IndexPath]) {
+        self.winnerTextLabel.text = text
+        indexes.forEach { self.tttcell(at: $0)?.setWinnerCell() }
+    }
+    
+    func setActionButtonText(_ text: String) {
+        self.rstClrButton.setTitle(text, for: UIControlState())
     }
 }
 
@@ -101,7 +103,7 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let _ = collectionView.cellForItem(at: indexPath) as? TicTacTowCollectionViewCell {
-            viewModel?.clickedCell(at: indexPath)
+            presenter?.clickedCell(at: indexPath)
         }
     }
 }

@@ -16,13 +16,14 @@
 		343271921EF04DB400542566 /* TicTacTowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432718D1EF04DB400542566 /* TicTacTowCollectionViewCell.swift */; };
 		343271931EF04DB400542566 /* TicTacTowCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3432718E1EF04DB400542566 /* TicTacTowCollectionViewCell.xib */; };
 		343271941EF04DB400542566 /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432718F1EF04DB400542566 /* UIKit+Extensions.swift */; };
+		346E2D041EFC04BC00225095 /* TicTacToeViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346E2D031EFC04BC00225095 /* TicTacToeViewProtocol.swift */; };
 		34E194991EF2CD21006337BD /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E194981EF2CD20006337BD /* Player.swift */; };
 		34E1949B1EF2CD62006337BD /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E1949A1EF2CD62006337BD /* Cell.swift */; };
 		34E1949D1EF2CDAB006337BD /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E1949C1EF2CDAB006337BD /* Board.swift */; };
 		34E1949F1EF2D99C006337BD /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E1949E1EF2D99C006337BD /* Game.swift */; };
 		34E194A31EF2DA05006337BD /* BoardProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E194A21EF2DA05006337BD /* BoardProtocol.swift */; };
-		34E194A51EF3058F006337BD /* TicTacToeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E194A41EF3058F006337BD /* TicTacToeViewModel.swift */; };
-		34E194A71EF305FE006337BD /* TicTacToeViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E194A61EF305FE006337BD /* TicTacToeViewModelProtocol.swift */; };
+		34E194A51EF3058F006337BD /* TicTacToePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E194A41EF3058F006337BD /* TicTacToePresenter.swift */; };
+		34E194A71EF305FE006337BD /* TicTacTowPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E194A61EF305FE006337BD /* TicTacTowPresenterProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,13 +51,14 @@
 		3432718D1EF04DB400542566 /* TicTacTowCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicTacTowCollectionViewCell.swift; sourceTree = "<group>"; };
 		3432718E1EF04DB400542566 /* TicTacTowCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TicTacTowCollectionViewCell.xib; sourceTree = "<group>"; };
 		3432718F1EF04DB400542566 /* UIKit+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
+		346E2D031EFC04BC00225095 /* TicTacToeViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicTacToeViewProtocol.swift; sourceTree = "<group>"; };
 		34E194981EF2CD20006337BD /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		34E1949A1EF2CD62006337BD /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		34E1949C1EF2CDAB006337BD /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		34E1949E1EF2D99C006337BD /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		34E194A21EF2DA05006337BD /* BoardProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardProtocol.swift; sourceTree = "<group>"; };
-		34E194A41EF3058F006337BD /* TicTacToeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicTacToeViewModel.swift; sourceTree = "<group>"; };
-		34E194A61EF305FE006337BD /* TicTacToeViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicTacToeViewModelProtocol.swift; sourceTree = "<group>"; };
+		34E194A41EF3058F006337BD /* TicTacToePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicTacToePresenter.swift; sourceTree = "<group>"; };
+		34E194A61EF305FE006337BD /* TicTacTowPresenterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicTacTowPresenterProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +102,7 @@
 			children = (
 				34E194971EF2C870006337BD /* Utils */,
 				34E194961EF2C85F006337BD /* Views */,
-				34E194951EF2C856006337BD /* ViewModels */,
+				34E194951EF2C856006337BD /* Presenter */,
 				34E194941EF2C835006337BD /* Models */,
 				3432718A1EF04DB400542566 /* TicTacToe-Bridging-Header.h */,
 				3432716A1EF04D6E00542566 /* AppDelegate.swift */,
@@ -129,13 +131,13 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		34E194951EF2C856006337BD /* ViewModels */ = {
+		34E194951EF2C856006337BD /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				34E194A41EF3058F006337BD /* TicTacToeViewModel.swift */,
-				34E194A61EF305FE006337BD /* TicTacToeViewModelProtocol.swift */,
+				34E194A41EF3058F006337BD /* TicTacToePresenter.swift */,
+				34E194A61EF305FE006337BD /* TicTacTowPresenterProtocol.swift */,
 			);
-			name = ViewModels;
+			name = Presenter;
 			sourceTree = "<group>";
 		};
 		34E194961EF2C85F006337BD /* Views */ = {
@@ -145,6 +147,7 @@
 				3432718E1EF04DB400542566 /* TicTacTowCollectionViewCell.xib */,
 				3432716C1EF04D6E00542566 /* ViewController.swift */,
 				3432716E1EF04D6E00542566 /* Main.storyboard */,
+				346E2D031EFC04BC00225095 /* TicTacToeViewProtocol.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -285,11 +288,12 @@
 				3432716D1EF04D6E00542566 /* ViewController.swift in Sources */,
 				3432716B1EF04D6E00542566 /* AppDelegate.swift in Sources */,
 				343271941EF04DB400542566 /* UIKit+Extensions.swift in Sources */,
-				34E194A51EF3058F006337BD /* TicTacToeViewModel.swift in Sources */,
+				34E194A51EF3058F006337BD /* TicTacToePresenter.swift in Sources */,
 				34E194A31EF2DA05006337BD /* BoardProtocol.swift in Sources */,
-				34E194A71EF305FE006337BD /* TicTacToeViewModelProtocol.swift in Sources */,
+				34E194A71EF305FE006337BD /* TicTacTowPresenterProtocol.swift in Sources */,
 				34E194991EF2CD21006337BD /* Player.swift in Sources */,
 				34E1949D1EF2CDAB006337BD /* Board.swift in Sources */,
+				346E2D041EFC04BC00225095 /* TicTacToeViewProtocol.swift in Sources */,
 				343271921EF04DB400542566 /* TicTacTowCollectionViewCell.swift in Sources */,
 				34E1949B1EF2CD62006337BD /* Cell.swift in Sources */,
 				34E1949F1EF2D99C006337BD /* Game.swift in Sources */,

@@ -9,46 +9,39 @@
 
 import Foundation
 
-class TicTacTowViewModel : TicTacTowViewModelProtocol {
+class TicTacTowPresenter : TicTacTowPresenterProtocol {
     
-    private var dataModel : BoardProtocol
+    private var dataModel : BoardProtocol?
     
-    init(dataModel: BoardProtocol) {
+    private weak var tttView: TicTacToeViewProtocol?
+    
+    init(_ view: TicTacToeViewProtocol, _ dataModel: BoardProtocol) {
         self.dataModel = dataModel
+        self.tttView = view
         
-        self.dataModel.moveCompleter = { game in
+        tttView?.setActionButtonText("Clear")
+        
+        self.dataModel?.moveCompleter = { game in
                 switch game {
                 case .move(let player, let index):
-                    self.markTictactoeCell?(player.toString,
+                    tttView?.markTictactoeCell(player.toString,
                                             IndexPath(index.0, index.1))
                     
                 case .draw:
-                    self.declareDraw?("Draw")
-                    self.setActionButtonText?("Reset")
+                    tttView?.declareDraw("Draw")
+                    tttView?.setActionButtonText("Reset")
                     
                 case .won(let player, let indices):
                     let indexPaths: [IndexPath] = indices.flatMap {
                         IndexPath($0.0, $0.1)
                     }
-                    self.declareWinner?("Winner is \(player.toString)", indexPaths)
-                    self.setActionButtonText?("Reset")
+                    tttView?.declareWinner("Winner is \(player.toString)", indexPaths)
+                    tttView?.setActionButtonText("Reset")
                     
                 }
         }
     }
-    
-    var markTictactoeCell : ((String, IndexPath) -> ())?
-    
-    var declareDraw: ((String) -> ())?
-    
-    var declareWinner: ((String, [IndexPath]) -> ())?
-    
-    var setActionButtonText: ((String) -> ())? {
-        didSet {
-            setActionButtonText?("Clear")
-        }
-    }
-    
+
     func reset() {
         dataModel.reset()
         setActionButtonText?("Clear")
