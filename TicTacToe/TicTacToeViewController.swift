@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TicTacToeViewController: UIViewController {
     
     fileprivate struct Consts {
         static let rows = 3
@@ -69,7 +69,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension TicTacToeViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Consts.rows * Consts.columns

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3432716B1EF04D6E00542566 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432716A1EF04D6E00542566 /* AppDelegate.swift */; };
-		3432716D1EF04D6E00542566 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432716C1EF04D6E00542566 /* ViewController.swift */; };
+		3432716D1EF04D6E00542566 /* TicTacToeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432716C1EF04D6E00542566 /* TicTacToeViewController.swift */; };
 		343271701EF04D6E00542566 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3432716E1EF04D6E00542566 /* Main.storyboard */; };
 		343271721EF04D6E00542566 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 343271711EF04D6E00542566 /* Assets.xcassets */; };
 		343271751EF04D6E00542566 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 343271731EF04D6E00542566 /* LaunchScreen.storyboard */; };
@@ -38,7 +38,7 @@
 /* Begin PBXFileReference section */
 		343271671EF04D6E00542566 /* TicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3432716A1EF04D6E00542566 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3432716C1EF04D6E00542566 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3432716C1EF04D6E00542566 /* TicTacToeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeViewController.swift; sourceTree = "<group>"; };
 		3432716F1EF04D6E00542566 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		343271711EF04D6E00542566 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		343271741EF04D6E00542566 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 			children = (
 				3432718D1EF04DB400542566 /* TicTacTowCollectionViewCell.swift */,
 				3432718E1EF04DB400542566 /* TicTacTowCollectionViewCell.xib */,
-				3432716C1EF04D6E00542566 /* ViewController.swift */,
+				3432716C1EF04D6E00542566 /* TicTacToeViewController.swift */,
 				3432716E1EF04D6E00542566 /* Main.storyboard */,
 			);
 			name = Views;
@@ -282,7 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3432716D1EF04D6E00542566 /* ViewController.swift in Sources */,
+				3432716D1EF04D6E00542566 /* TicTacToeViewController.swift in Sources */,
 				3432716B1EF04D6E00542566 /* AppDelegate.swift in Sources */,
 				343271941EF04DB400542566 /* UIKit+Extensions.swift in Sources */,
 				34E194A51EF3058F006337BD /* TicTacToeViewModel.swift in Sources */,
