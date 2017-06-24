@@ -8,10 +8,11 @@
 //
 
 import Foundation
+import RxSwift
 
 class TicTacTowViewModel : TicTacTowViewModelProtocol {
     
-    var markTictactoeCell: ((String, IndexPath) -> ())?
+    var markTictactoeCell = Variable<String>("")
     
     var declareDraw: ((String) -> ())?
     
@@ -23,13 +24,25 @@ class TicTacTowViewModel : TicTacTowViewModelProtocol {
         }
     }
     
+    fileprivate var _resetButtonText = Variable<String>("Clear")
+    var resetButtonText: Observable<String> {
+        return _resetButtonText.asObservable()
+    }
+    
+    fileprivate var _winnerLabelText = Variable<String>("")
+    var resultText : Observable<String> {
+        return _winnerLabelText.asObservable()
+    }
+
     private var dataModel : BoardProtocol? {
         didSet {
             dataModel?.moveCompleter = { game in
                 switch game {
-                case .move(let player, let index):
-                    self.markTictactoeCell?(player.toString,
-                                            IndexPath(index.0, index.1))
+                case .move(let player, let _):
+                    self.markTictactoeCell.value = player.toString
+                    
+//                    self.markTictactoeCell(player.toString,
+//                                            IndexPath(index.0, index.1))
                     
                 case .draw:
                     self.declareDraw?("Draw")

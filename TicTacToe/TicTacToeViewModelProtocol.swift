@@ -10,15 +10,4 @@ import Foundation
 
 protocol TicTacTowViewModelProtocol {
     
-    var markTictactoeCell: ((String, IndexPath) -> ())? { get set }
-    
-    var declareDraw: ((String) -> ())? { get set }
-    
-    var declareWinner: ((String, [IndexPath]) -> ())? { get set }
-    
-    var setActionButtonText: ((String) -> ())? { get set }
-    
-    func clickedCell(at indexPath: IndexPath)
-    
-    func reset()
-}
+   }

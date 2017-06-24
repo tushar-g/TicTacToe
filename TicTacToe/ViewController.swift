@@ -8,6 +8,20 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+import RxDataSources
+
+struct TicTacTowSection : SectionModelType {
+    
+    var items: [String]
+    
+    init(original: TicTacTowSection, items: [String]) {
+        self = original
+        self.items = items
+    }
+}
+
 class ViewController: UIViewController {
     
     fileprivate struct Consts {
@@ -23,7 +37,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var winnerTextLabel: UILabel!
     @IBOutlet weak var rstClrButton: UIButton!
     
-    fileprivate var viewModel: TicTacTowViewModelProtocol?
+    fileprivate var viewModel: TicTacTowViewModel?
+    
+    fileprivate lazy var disposeBag: DisposeBag = DisposeBag()
+    fileprivate lazy var dataSource = RxCollectionViewSectionedReloadDataSource<TicTacTowSection>()
     
     @IBAction func rstClrButtonPressed(_ sender: Any) {
         clearCells() // <- Does this belong here? Should a View know
@@ -36,28 +53,41 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         winnerTextLabel.text = ""
-        ticTacTowGrid.delegate = self
-        ticTacTowGrid.dataSource = self
+        
+        ticTacTowGrid.rx.setDelegate(self).addDisposableTo(disposeBag)
+        ticTacTowGrid.rx.setDataSource(self).addDisposableTo(disposeBag)
+        
         ticTacTowGrid.register(TicTacTowCollectionViewCell.self)
         
         // This should be outside ViewController. Currently Dont have
         // Typhoon or any other dependency injection mode.
         viewModel = TicTacTowViewModel(dataModel: Board())
-        viewModel?.setActionButtonText = { text in
-            self.rstClrButton.setTitle(text, for: UIControlState())
-        }
-        viewModel?.declareDraw = { text in
-            self.winnerTextLabel.text = text
-        }
+        
+        viewModel?.resetButtonText
+            .bind(to: rstClrButton.rx.title())
+            .addDisposableTo(disposeBag)
+        
+        viewModel?.resultText
+            .bind(to: winnerTextLabel.rx.text)
+            .addDisposableTo(disposeBag)
         
         viewModel?.declareWinner = { text, indexes in
             self.winnerTextLabel.text = text
             indexes.forEach { self.tttcell(at: $0)?.setWinnerCell() }
         }
         
-        viewModel?.markTictactoeCell = {player, index in
-            self.tttcell(at: index)?.mark(player: player)
+        dataSource.configureCell = { ds, cv, indexPath, _ in
+            return cv.dequeueReusableCell(withReuseIdentifier: TicTacTowCollectionViewCell.reuseIdentifier, for: indexPath) as! TicTacTowCollectionViewCell
         }
+        
+        ticTacTowGrid.rx.modelSelected(String.self)
+            .bind(to: (viewModel?.markTictactoeCell)!)
+            .addDisposableTo(disposeBag)
+        
+        ticTacTowGrid.rx.itemSelected
+            .bind(to: self.viewModel?.clickedCell(at: $0))
+            .addDisposableTo(disposeBag)
+        
     }
     
     fileprivate func tttcell(at indexPath: IndexPath) -> TicTacTowCollectionViewCell? {
