@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TicTacToe/TicTacToeViewModel.swift"
-            timestampString = "523355379.826743"
+            timestampString = "523356655.642726"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "clickedCell(at:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -97,54 +97,6 @@
             endingLineNumber = "54"
             landmarkName = "mark(row:col:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TicTacToe/TicTacToeViewModel.swift"
-            timestampString = "523355379.826743"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "init(dataModel:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TicTacToe.TicTacTowViewModel.init (dataModel : TicTacToe.BoardProtocol) -&gt; TicTacToe.TicTacTowViewModel"
-                  moduleName = "TicTacToe"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tushargupta/MyDrive/Projects/personal/ios/TicTacToe/TicTacToe/TicTacToeViewModel.swift"
-                  timestampString = "523355380.021952"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31"
-                  offsetFromSymbolStart = "936">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TicTacToe.TicTacTowViewModel.(init (dataModel : TicTacToe.BoardProtocol) -&gt; TicTacToe.TicTacTowViewModel).(closure #1)"
-                  moduleName = "TicTacToe"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tushargupta/MyDrive/Projects/personal/ios/TicTacToe/TicTacToe/TicTacToeViewModel.swift"
-                  timestampString = "523355380.024831"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "46">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

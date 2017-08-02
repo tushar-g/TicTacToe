@@ -53,7 +53,7 @@ class ViewController: UIViewController {
             flow.itemSize = Consts.cellSize
         }
         
-        viewModel?.viewState.subscribe(onNext: { state in
+        viewModel?.viewState?.subscribe(onNext: { state in
             switch state {
             case .gameReset:
                 self.winnerTextLabel.text = ""
