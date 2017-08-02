@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class Board : BoardProtocol {
     
@@ -19,6 +20,11 @@ class Board : BoardProtocol {
     fileprivate let cells: [[Cell]] = [[Cell(), Cell(), Cell()],
                                        [Cell(), Cell(), Cell()],
                                        [Cell(), Cell(), Cell()]]
+    
+    fileprivate var _gameObs = Variable<Game>(Game.draw)
+    var gameMove: Observable<Game> {
+        return _gameObs.asObservable()
+    }
     
     init() {
         reset()
@@ -35,16 +41,16 @@ class Board : BoardProtocol {
     func mark(row: Row, col: Col) {
         if isValidMove(row, col) {
             cells[row][col].player = currentTurn
-            moveCompleter?(Game.move(currentTurn, (row, col)))
+            _gameObs.value = Game.move(currentTurn, (row, col))
             
             let winingMove = isWinningMove(by: currentTurn, atRow: row, atCol: col)
             if let indices = winingMove.1, winingMove.0 == true {
-                moveCompleter?(Game.won(currentTurn, indices))
+                _gameObs.value = Game.won(currentTurn, indices)
                 gameState = .finished
             }
             
             if isDraw() {
-                moveCompleter?(Game.draw)
+                _gameObs.value = Game.draw
                 gameState = .finished
             }
             

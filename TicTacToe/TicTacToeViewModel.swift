@@ -12,61 +12,55 @@ import RxSwift
 
 class TicTacTowViewModel : TicTacTowViewModelProtocol {
     
-    var markTictactoeCell = Variable<String>("")
+    fileprivate lazy var disposeBag = DisposeBag()
     
-    var declareDraw: ((String) -> ())?
+    fileprivate var dataModel : BoardProtocol?
     
-    var declareWinner: ((String, [IndexPath]) -> ())?
-    
-    var setActionButtonText: ((String) -> ())? {
-        didSet {
-            setActionButtonText?("Clear")
-        }
+    fileprivate var _viewState = Variable<TTTViewEvent>(.gameReset)
+    var viewState: Observable<TTTViewEvent> {
+        return _viewState.asObservable()
     }
     
     fileprivate var _resetButtonText = Variable<String>("Clear")
-    var resetButtonText: Observable<String> {
+    var resetText: Observable<String> {
         return _resetButtonText.asObservable()
-    }
-    
-    fileprivate var _winnerLabelText = Variable<String>("")
-    var resultText : Observable<String> {
-        return _winnerLabelText.asObservable()
-    }
-
-    private var dataModel : BoardProtocol? {
-        didSet {
-            dataModel?.moveCompleter = { game in
-                switch game {
-                case .move(let player, let _):
-                    self.markTictactoeCell.value = player.toString
-                    
-//                    self.markTictactoeCell(player.toString,
-//                                            IndexPath(index.0, index.1))
-                    
-                case .draw:
-                    self.declareDraw?("Draw")
-                    self.setActionButtonText?("Reset")
-                    
-                case .won(let player, let indices):
-                    let indexPaths: [IndexPath] = indices.flatMap {
-                        IndexPath($0.0, $0.1)
-                    }
-                    self.declareWinner?("Winner is \(player.toString)", indexPaths)
-                    self.setActionButtonText?("Reset")
-                    
-                }
-            }
-        }
     }
     
     init(dataModel: BoardProtocol) {
         self.dataModel = dataModel
+        self.dataModel?.gameMove.subscribe {
+            switch $0 {
+            case .next(let game):
+                self.sendViewEvent(game)
+                
+            case .error(_):
+                break
+                
+            case .completed:
+                break
+            }
+            }.addDisposableTo(disposeBag)
+    }
+
+    fileprivate func sendViewEvent(_ game: Game) {
+        switch game {
+        case .draw:
+            _viewState.value = TTTViewEvent.gameDraw("Draw")
+            _resetButtonText.value = "Reset"
+            
+        case .move(let player, let index):
+            _viewState.value = TTTViewEvent.moveMade(player.toString, IndexPath(index.0, index.1))
+            
+        case .won(let player, let indexes):
+            _viewState.value = TTTViewEvent.gameWon(player.toString, indexes.flatMap { IndexPath($0.0, $0.1) } )
+            _resetButtonText.value = "Reset"
+        }
     }
 
     func reset() {
         dataModel?.reset()
-        setActionButtonText?("Clear")
+        _resetButtonText.value = "Clear"
+        _viewState.value = .gameReset
     }
     
     func clickedCell(at indexPath: IndexPath) {

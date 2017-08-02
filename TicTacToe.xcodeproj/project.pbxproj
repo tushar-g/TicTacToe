@@ -23,6 +23,7 @@
 		34E194A31EF2DA05006337BD /* BoardProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E194A21EF2DA05006337BD /* BoardProtocol.swift */; };
 		34E194A51EF3058F006337BD /* TicTacToeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E194A41EF3058F006337BD /* TicTacToeViewModel.swift */; };
 		34E194A71EF305FE006337BD /* TicTacToeViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34E194A61EF305FE006337BD /* TicTacToeViewModelProtocol.swift */; };
+		34EFF9191F3093CD003D8C46 /* TTTViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EFF9181F3093CD003D8C46 /* TTTViewEvent.swift */; };
 		8F45895FE8A8239F6B377826 /* Pods_TicTacToe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87C05B26D99427938A99145 /* Pods_TicTacToe.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		34E194A21EF2DA05006337BD /* BoardProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardProtocol.swift; sourceTree = "<group>"; };
 		34E194A41EF3058F006337BD /* TicTacToeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicTacToeViewModel.swift; sourceTree = "<group>"; };
 		34E194A61EF305FE006337BD /* TicTacToeViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicTacToeViewModelProtocol.swift; sourceTree = "<group>"; };
+		34EFF9181F3093CD003D8C46 /* TTTViewEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTViewEvent.swift; sourceTree = "<group>"; };
 		E12DC8489533B1E7308249FA /* Pods-TicTacToe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToe/Pods-TicTacToe.debug.xcconfig"; sourceTree = "<group>"; };
 		F87C05B26D99427938A99145 /* Pods_TicTacToe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TicTacToe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -141,6 +143,7 @@
 			children = (
 				34E194A41EF3058F006337BD /* TicTacToeViewModel.swift */,
 				34E194A61EF305FE006337BD /* TicTacToeViewModelProtocol.swift */,
+				34EFF9181F3093CD003D8C46 /* TTTViewEvent.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				34E1949D1EF2CDAB006337BD /* Board.swift in Sources */,
 				343271921EF04DB400542566 /* TicTacTowCollectionViewCell.swift in Sources */,
 				34E1949B1EF2CD62006337BD /* Cell.swift in Sources */,
+				34EFF9191F3093CD003D8C46 /* TTTViewEvent.swift in Sources */,
 				34E1949F1EF2D99C006337BD /* Game.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

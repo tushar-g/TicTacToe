@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol BoardProtocol {
     
     typealias Row = Int
     typealias Col = Int
     
-    var moveCompleter: ((Game) -> Void)? {get set}
+    var gameMove: Observable<Game> { get }
     
     func mark(row: Row, col: Col)
     
