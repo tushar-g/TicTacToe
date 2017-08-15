@@ -61,7 +61,7 @@ class TicTacTowViewModel : TicTacTowViewModelProtocol {
     }
 }
 
-private extension IndexPath {
+extension IndexPath {
     init(_ row: Int, _ col: Int) {
         self.init(row: row * 3 + col, section: 0)
     }
